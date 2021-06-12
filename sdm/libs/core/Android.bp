@@ -1,6 +1,26 @@
+soong_config_module_type {
+    name: "target_panel_dimension_multiplier",
+    module_type: "cc_defaults",
+    config_namespace: "qcomDisplayVars",
+    value_variables: ["target_panel_dimension_multiplier"],
+    properties: ["cppflags"],
+}
+
+target_panel_dimension_multiplier {
+    name: "target_panel_dimension_multiplier_defaults",
+    soong_config_variables: {
+        target_panel_dimension_multiplier: {
+            cppflags: ["-DPANEL_DIMENSION_MULTIPLIER=%s"],
+        },
+    },
+}
+
 cc_library_shared {
     name: "libsdmcore",
-    defaults: ["qtidisplay_defaults"],
+    defaults: [
+        "qtidisplay_defaults",
+        "target_panel_dimension_multiplier_defaults",
+    ],
     sanitize: {
         integer_overflow: true,
     },
@@ -47,5 +67,4 @@ cc_library_shared {
         "drm/hw_virtual_drm.cpp",
         "drm/hw_color_manager_drm.cpp",
     ],
-
 }
